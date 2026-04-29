@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Біг з нуля — 2-тижнева програма для початківців</title>
+  <meta name="description" content="Біг з нуля — безпечна 2-тижнева програма бігу для початківців. 6 тренувань, поступовий прогрес, без болю та травм. Починай бігати правильно." />
+  <meta name="keywords" content="біг, програма бігу, початківці, 2 тижні, безпечний біг, навчитися бігати" />
+  <meta property="og:title" content="Біг з нуля — 2-тижнева програма для початківців" />
+  <meta property="og:description" content="Безпечна програма бігу для тих, хто ніколи не бігав або повертається після паузи." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --off-black: #141414;
+      --dark: #1c1c1c;
+      --mid: #2e2e2e;
+      --border: #2a2a2a;
+      --gray: #6b6b6b;
+      --light-gray: #b0b0b0;
+      --off-white: #f5f3ef;
+      --white: #ffffff;
+      --accent: #e8ff47;
+      --accent-dim: rgba(232, 255, 71, 0.12);
+      --accent-hover: #d4eb2a;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+      --radius: 4px;
+      --radius-lg: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background-color: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo { font-family: var(--serif); font-size: 1.1rem; letter-spacing: 0.02em; color: var(--white); }
+    .nav-cta {
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 10px 22px; border-radius: 100px;
+      background: var(--accent); color: var(--black);
+      text-decoration: none; transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 40px 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 30%, rgba(232,255,71,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,255,255,0.03) 0%, transparent 50%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-tag span { width: 28px; height: 1px; background: var(--accent); display: block; }
+    .hero h1 {
+      font-family: var(--serif); font-size: clamp(3rem, 9vw, 8rem);
+      line-height: 1.0; letter-spacing: -0.02em;
+      color: var(--white); max-width: 900px;
+      opacity: 0; animation: fadeUp 0.9s 0.35s forwards;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      margin-top: 28px; max-width: 460px;
+      font-size: 1.05rem; font-weight: 300; color: var(--light-gray); line-height: 1.7;
+      opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+    }
+    .hero-actions {
+      display: flex; align-items: center; gap: 24px; margin-top: 44px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.9s 0.65s forwards;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: var(--black);
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 18px 36px; border-radius: 100px; text-decoration: none;
+      transition: background 0.2s, transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 0 0 0 rgba(232,255,71,0.3);
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 40px rgba(232,255,71,0.25); }
+    .btn-primary svg { transition: transform 0.2s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+    .hero-note { font-size: 0.82rem; color: var(--gray); }
+    .hero-stats {
+      position: absolute; right: 40px; bottom: 80px; z-index: 1;
+      display: flex; flex-direction: column; gap: 4px; text-align: right;
+      opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .hero-stats .num { font-family: var(--serif); font-size: 3.5rem; color: var(--white); line-height: 1; }
+    .hero-stats .label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fadeIn 1s 1.2s forwards;
+    }
+    .hero-scroll span { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gray), transparent); animation: scrollPulse 2s infinite; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 100px 40px; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gray); margin-bottom: 20px;
+    }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: var(--gray); display: block; }
+    h2 {
+      font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.8rem);
+      line-height: 1.1; letter-spacing: -0.02em; color: var(--white);
+    }
+    h2 em { font-style: italic; color: var(--accent); }
+    .lead { font-size: 1.05rem; color: var(--light-gray); line-height: 1.75; max-width: 560px; margin-top: 16px; }
+
+    /* ── PROBLEM ── */
+    .problem { background: var(--off-black); }
+    .problem-inner { max-width: 1100px; margin: auto; }
+    .problem-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 60px;
+    }
+    .problem-card {
+      background: var(--dark); padding: 40px 36px;
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .problem-card:hover { background: var(--mid); }
+    .problem-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: transparent;
+      transition: background 0.3s;
+    }
+    .problem-card:hover::before { background: var(--accent); }
+    .problem-num {
+      font-family: var(--serif); font-size: 4rem; color: rgba(255,255,255,0.06);
+      line-height: 1; margin-bottom: 16px; display: block;
+    }
+    .problem-card h3 { font-family: var(--serif); font-size: 1.4rem; color: var(--white); margin-bottom: 10px; }
+    .problem-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+
+    /* ── SOLUTION ── */
+    .solution { background: var(--black); }
+    .solution-inner { max-width: 1100px; margin: auto; }
+    .solution-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 60px; }
+    .solution-list { display: flex; flex-direction: column; gap: 28px; }
+    .solution-item { display: flex; gap: 20px; }
+    .solution-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--accent-dim); border: 1px solid rgba(232,255,71,0.2);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      color: var(--accent); font-size: 1rem;
+    }
+    .solution-item h4 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .solution-item p { font-size: 0.875rem; color: var(--gray); line-height: 1.65; }
+    .solution-visual {
+      background: var(--dark); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 40px; position: sticky; top: 120px;
+    }
+    .week-block { margin-bottom: 32px; }
+    .week-block:last-child { margin-bottom: 0; }
+    .week-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .week-title { font-family: var(--serif); font-size: 1.4rem; color: var(--white); margin-bottom: 8px; }
+    .week-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+    .week-divider { height: 1px; background: var(--border); margin: 24px 0; }
+    .week-sessions {
+      display: flex; gap: 6px; margin-top: 12px;
+    }
+    .session-dot {
+      flex: 1; height: 6px; border-radius: 100px; background: var(--mid);
+      position: relative; overflow: hidden;
+    }
+    .session-dot.active { background: var(--accent); }
+    .session-dot.semi { background: rgba(232,255,71,0.4); }
+
+    /* ── PROGRAM ── */
+    .program { background: var(--off-black); }
+    .program-inner { max-width: 1100px; margin: auto; }
+    .program-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px; }
+    .program-card {
+      background: var(--dark); padding: 36px 32px;
+      border-top: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .program-card:hover { background: var(--mid); }
+    .program-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: var(--accent-dim); display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 20px;
+    }
+    .program-card h3 { font-family: var(--serif); font-size: 1.2rem; color: var(--white); margin-bottom: 8px; }
+    .program-card p { font-size: 0.875rem; color: var(--gray); line-height: 1.65; }
+    .program-highlight {
+      margin-top: 60px; background: var(--dark); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 48px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-family: var(--serif); font-size: 3rem; color: var(--accent); display: block; line-height: 1; }
+    .stat-label { font-size: 0.8rem; color: var(--gray); margin-top: 6px; letter-spacing: 0.04em; }
+
+    /* ── RESULTS ── */
+    .results { background: var(--black); }
+    .results-inner { max-width: 1100px; margin: auto; }
+    .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 60px; }
+    .result-card {
+      padding: 36px; border: 1px solid var(--border); border-radius: var(--radius-lg);
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .result-card:hover { border-color: rgba(232,255,71,0.3); transform: translateY(-3px); }
+    .result-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 0% 0%, rgba(232,255,71,0.05) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .result-card:hover::after { opacity: 1; }
+    .result-check {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--accent-dim); border: 1px solid rgba(232,255,71,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: 0.9rem; margin-bottom: 16px;
+    }
+    .result-card h4 { font-family: var(--serif); font-size: 1.2rem; color: var(--white); margin-bottom: 8px; }
+    .result-card p { font-size: 0.875rem; color: var(--gray); line-height: 1.65; }
+
+    /* ── WHY ── */
+    .why { background: var(--off-black); }
+    .why-inner { max-width: 1100px; margin: auto; }
+    .why-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+    .why-points { display: flex; flex-direction: column; gap: 0; }
+    .why-point {
+      display: flex; gap: 20px; padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left 0.3s;
+    }
+    .why-point:hover { padding-left: 8px; }
+    .why-point:first-child { border-top: 1px solid var(--border); }
+    .why-num {
+      font-family: var(--serif); font-size: 1.1rem; color: var(--accent);
+      opacity: 0.6; flex-shrink: 0; margin-top: 2px;
+    }
+    .why-point h4 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .why-point p { font-size: 0.875rem; color: var(--gray); line-height: 1.65; }
+    .why-quote {
+      background: var(--dark); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 48px; position: relative;
+    }
+    .why-quote::before {
+      content: '"'; font-family: var(--serif); font-size: 8rem; line-height: 0.8;
+      color: var(--accent); opacity: 0.15;
+      position: absolute; top: 24px; left: 28px;
+    }
+    .why-quote p {
+      font-family: var(--serif); font-style: italic; font-size: 1.35rem;
+      color: var(--white); line-height: 1.6; position: relative; z-index: 1;
+    }
+    .why-quote-author { margin-top: 24px; font-size: 0.82rem; color: var(--gray); letter-spacing: 0.04em; }
+
+    /* ── PRICE ── */
+    .price { background: var(--black); }
+    .price-inner { max-width: 700px; margin: auto; text-align: center; }
+    .price-inner h2 { margin-bottom: 16px; }
+    .price-inner .lead { margin: 0 auto 56px; text-align: center; }
+    .price-card {
+      background: var(--dark); border: 1px solid var(--border); border-radius: 20px;
+      padding: 56px 48px; position: relative; overflow: hidden;
+    }
+    .price-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+    .price-badge {
+      display: inline-block; background: var(--accent-dim); border: 1px solid rgba(232,255,71,0.2);
+      color: var(--accent); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 32px;
+    }
+    .price-amount {
+      font-family: var(--serif); font-size: 6rem; color: var(--white);
+      line-height: 1; letter-spacing: -0.03em;
+    }
+    .price-amount sup { font-size: 2rem; vertical-align: super; color: var(--accent); }
+    .price-period { font-size: 0.85rem; color: var(--gray); margin-top: 4px; margin-bottom: 32px; }
+    .price-features { list-style: none; text-align: left; margin: 32px 0 40px; display: flex; flex-direction: column; gap: 12px; }
+    .price-features li { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--light-gray); }
+    .price-features li::before {
+      content: '✓'; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--accent-dim); color: var(--accent); font-size: 0.72rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .price-divider { height: 1px; background: var(--border); margin: 32px 0; }
+    .price-card .btn-primary { width: 100%; justify-content: center; font-size: 1rem; padding: 20px; border-radius: 100px; }
+    .price-guarantee { margin-top: 20px; font-size: 0.8rem; color: var(--gray); }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      background: var(--accent); padding: 120px 40px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .final-cta::before {
+      content: 'БІГ'; font-family: var(--serif); font-size: 30vw;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      color: rgba(0,0,0,0.06); white-space: nowrap; pointer-events: none;
+      letter-spacing: -0.05em;
+    }
+    .final-cta-inner { position: relative; z-index: 1; max-width: 700px; margin: auto; }
+    .final-cta h2 { font-family: var(--serif); color: var(--black); font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.05; }
+    .final-cta p { color: rgba(0,0,0,0.6); font-size: 1.05rem; margin: 20px 0 44px; }
+    .btn-dark {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--black); color: var(--white);
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 18px 40px; border-radius: 100px; text-decoration: none;
+      transition: background 0.2s, transform 0.25s;
+    }
+    .btn-dark:hover { background: var(--off-black); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--off-black); padding: 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+    .footer-logo { font-family: var(--serif); color: var(--white); font-size: 1rem; }
+    footer p { font-size: 0.8rem; color: var(--gray); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 0 20px 80px; }
+      .hero-stats { display: none; }
+      section { padding: 70px 20px; }
+      .problem-grid { grid-template-columns: 1fr; gap: 2px; }
+      .solution-layout { grid-template-columns: 1fr; gap: 40px; }
+      .solution-visual { position: static; }
+      .program-grid { grid-template-columns: 1fr; }
+      .program-highlight { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .results-grid { grid-template-columns: 1fr; }
+      .why-layout { grid-template-columns: 1fr; gap: 40px; }
+      .price-card { padding: 36px 24px; }
+      .price-amount { font-size: 4.5rem; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Біг з нуля</div>
+    <a href="#price" class="nav-cta">Почати зараз</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div style="position:relative; z-index:1;">
+      <div class="hero-tag"><span></span> Програма для початківців</div>
+      <h1>Почни бігати<br><em>правильно</em><br>і без болю.</h1>
+      <p class="hero-sub">2-тижнева програма, яка поступово адаптує твоє тіло до бігу — безпечно, структуровано, ефективно.</p>
+      <div class="hero-actions">
+        <a href="#price" class="btn-primary">
+          Почати зараз
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="hero-note">Тільки 12€ — доступ назавжди</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <span class="num">2</span>
+      <span class="label">тижні до результату</span>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Гортай</span>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="problem-inner">
+      <div class="reveal">
+        <div class="section-label">Проблема</div>
+        <h2>Що заважає<br><em>почати</em> бігати?</h2>
+        <p class="lead">Більшість людей кидають біг в перші два тижні — не через слабку волю, а через відсутність плану.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card reveal reveal-delay-1">
+          <span class="problem-num">01</span>
+          <h3>Страх і невпевненість</h3>
+          <p>«А раптом я не зможу?» Страх виглядати безпорадно або впасти на першому кілометрі зупиняє ще до старту.</p>
+        </div>
+        <div class="problem-card reveal reveal-delay-2">
+          <span class="problem-num">02</span>
+          <h3>Біль після тренування</h3>
+          <p>Занадто багато одразу — і коліна болять, м'язи гудуть. Тіло не встигає адаптуватися до навантаження.</p>
+        </div>
+        <div class="problem-card reveal reveal-delay-3">
+          <span class="problem-num">03</span>
+          <h3>Немає структури</h3>
+          <p>Бігати «скільки зможеш» — не план. Без прогресії та системи важко зрозуміти, чи рухаєшся в правильному напрямку.</p>
+        </div>
+        <div class="problem-card reveal reveal-delay-4">
+          <span class="problem-num">04</span>
+          <h3>Низька витривалість</h3>
+          <p>Задихаєшся після 200 метрів — і опускаєш руки. Але це не слабкість: тіло просто ще не адаптоване до бігу.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="solution">
+    <div class="solution-inner">
+      <div class="reveal">
+        <div class="section-label">Рішення</div>
+        <h2>Як програма<br>вирішує це <em>все</em>?</h2>
+        <p class="lead">«Біг з нуля» побудований так, щоб твоє тіло поступово звикало до навантаження — і кожне тренування приносило задоволення, а не втому.</p>
+      </div>
+      <div class="solution-layout">
+        <div class="solution-list">
+          <div class="solution-item reveal reveal-delay-1">
+            <div class="solution-icon">→</div>
+            <div>
+              <h4>Поступовий прогрес</h4>
+              <p>Від коротких сесій до впевненого бігу — щотижня трошки більше, без різких стрибків у навантаженні.</p>
+            </div>
+          </div>
+          <div class="solution-item reveal reveal-delay-2">
+            <div class="solution-icon">⚡</div>
+            <div>
+              <h4>Без перевантажень</h4>
+              <p>Формат «біг + ходьба» дає серцево-судинній системі та м'язам час відновитись між інтервалами.</p>
+            </div>
+          </div>
+          <div class="solution-item reveal reveal-delay-3">
+            <div class="solution-icon">◎</div>
+            <div>
+              <h4>Чіткий план на кожен день</h4>
+              <p>Ти завжди знаєш, що робити. Немає сумнівів, немає стресу — просто відкриваєш і тренуєшся.</p>
+            </div>
+          </div>
+          <div class="solution-item reveal reveal-delay-4">
+            <div class="solution-icon">✦</div>
+            <div>
+              <h4>Безпечна адаптація</h4>
+              <p>Техніка, мобільність і силова підготовка захищають суглоби й запобігають найпоширенішим травмам.</p>
+            </div>
+          </div>
+        </div>
+        <div class="solution-visual reveal">
+          <div class="week-block">
+            <div class="week-label">Тиждень 1</div>
+            <div class="week-title">Знайомство з бігом</div>
+            <div class="week-desc">Короткі бігові інтервали чергуються з ходьбою. Фокус — техніка, дихання, відчуття тіла. Без поспіху.</div>
+            <div class="week-sessions">
+              <div class="session-dot active"></div>
+              <div class="session-dot active"></div>
+              <div class="session-dot active"></div>
+              <div class="session-dot"></div>
+              <div class="session-dot"></div>
+              <div class="session-dot"></div>
+            </div>
+          </div>
+          <div class="week-divider"></div>
+          <div class="week-block">
+            <div class="week-label">Тиждень 2</div>
+            <div class="week-title">Будуємо витривалість</div>
+            <div class="week-desc">Інтервали стають довшими. Ходьби менше, бігу більше. Тіло вже адаптоване — і ти це відчуваєш.</div>
+            <div class="week-sessions">
+              <div class="session-dot active"></div>
+              <div class="session-dot active"></div>
+              <div class="session-dot active"></div>
+              <div class="session-dot active"></div>
+              <div class="session-dot active"></div>
+              <div class="session-dot semi"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section class="program">
+    <div class="program-inner">
+      <div class="reveal">
+        <div class="section-label">Структура</div>
+        <h2>Що входить<br>до <em>програми?</em></h2>
+      </div>
+      <div class="program-grid">
+        <div class="program-card reveal reveal-delay-1">
+          <div class="program-icon">🏃</div>
+          <h3>Біг + ходьба</h3>
+          <p>Основний формат кожного тренування. Інтервальний підхід — найбезпечніший спосіб почати бігати з нуля.</p>
+        </div>
+        <div class="program-card reveal reveal-delay-2">
+          <div class="program-icon">💪</div>
+          <h3>Сила та мобільність</h3>
+          <p>Короткі вправи для зміцнення м'язів-стабілізаторів і покращення рухливості суглобів.</p>
+        </div>
+        <div class="program-card reveal reveal-delay-3">
+          <div class="program-icon">🎯</div>
+          <h3>Техніка бігу</h3>
+          <p>Вправи для постави, кроку та постановки стопи. Правильна техніка — це і ефективність, і захист від травм.</p>
+        </div>
+        <div class="program-card reveal reveal-delay-1">
+          <div class="program-icon">📋</div>
+          <h3>Чіткий розклад</h3>
+          <p>6 тренувань на 2 тижні — по 3 в кожному. Конкретно, без зайвих слів, зручно для планування.</p>
+        </div>
+        <div class="program-card reveal reveal-delay-2">
+          <div class="program-icon">🧘</div>
+          <h3>Розминка та заминка</h3>
+          <p>Кожне тренування включає підготовчий блок і відновлювальні вправи після бігу.</p>
+        </div>
+        <div class="program-card reveal reveal-delay-3">
+          <div class="program-icon">📱</div>
+          <h3>Зручний формат</h3>
+          <p>Програма завжди під рукою. Відкрий, подивись і йди тренуватись — все просто.</p>
+        </div>
+      </div>
+      <div class="program-highlight reveal">
+        <div class="stat-item">
+          <span class="stat-num">2</span>
+          <div class="stat-label">тижні</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">6</span>
+          <div class="stat-label">тренувань</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">30</span>
+          <div class="stat-label">хв на сесію</div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">∞</span>
+          <div class="stat-label">доступ назавжди</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="results">
+    <div class="results-inner">
+      <div class="reveal">
+        <div class="section-label">Результат</div>
+        <h2>Що ти отримаєш<br>за <em>2 тижні?</em></h2>
+        <p class="lead">Не обіцяємо марафон. Обіцяємо те, що реально — і що залишиться з тобою назавжди.</p>
+      </div>
+      <div class="results-grid">
+        <div class="result-card reveal reveal-delay-1">
+          <div class="result-check">✓</div>
+          <h4>Бігаєш без страху</h4>
+          <p>Знаєш свій темп, своє дихання, своє тіло. Немає хаосу — є впевненість і розуміння.</p>
+        </div>
+        <div class="result-card reveal reveal-delay-2">
+          <div class="result-check">✓</div>
+          <h4>Більше енергії щодня</h4>
+          <p>Регулярна фізична активність підвищує рівень енергії — ти відчуєш це вже після першого тижня.</p>
+        </div>
+        <div class="result-card reveal reveal-delay-3">
+          <div class="result-check">✓</div>
+          <h4>Розумієш як тренуватись</h4>
+          <p>Ти отримуєш не просто план — а інструмент і знання, щоб продовжувати рухатись після програми.</p>
+        </div>
+        <div class="result-card reveal reveal-delay-4">
+          <div class="result-check">✓</div>
+          <h4>Ніякого болю після бігу</h4>
+          <p>Поступова прогресія й правильна техніка захищають від болю в колінах, гомілках та спині.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why">
+    <div class="why-inner">
+      <div class="reveal">
+        <div class="section-label">Підхід</div>
+        <h2>Чому це<br><em>працює?</em></h2>
+      </div>
+      <div class="why-layout">
+        <div class="why-points">
+          <div class="why-point reveal">
+            <div class="why-num">01</div>
+            <div>
+              <h4>Заснований на досвіді тренера</h4>
+              <p>Програма створена на основі реальної тренерської практики — не теорії з інтернету.</p>
+            </div>
+          </div>
+          <div class="why-point reveal reveal-delay-1">
+            <div class="why-num">02</div>
+            <div>
+              <h4>Якість руху понад кількість</h4>
+              <p>Краще пробігти 1 км правильно, ніж 5 км криво. Фокус на техніці — це довгострокова інвестиція.</p>
+            </div>
+          </div>
+          <div class="why-point reveal reveal-delay-2">
+            <div class="why-num">03</div>
+            <div>
+              <h4>Профілактика травм в основі</h4>
+              <p>Кожна вправа підібрана так, щоб зміцнити слабкі місця ще до того, як вони стануть проблемою.</p>
+            </div>
+          </div>
+          <div class="why-point reveal reveal-delay-3">
+            <div class="why-num">04</div>
+            <div>
+              <h4>Для реального життя</h4>
+              <p>Тренування займають ~30 хвилин і легко вписуються в будь-який графік — без відмовок.</p>
+            </div>
+          </div>
+        </div>
+        <div class="why-quote reveal">
+          <p>Твоє тіло розумніше, ніж ти думаєш. Дай йому правильний план — і воно тебе здивує.</p>
+          <div class="why-quote-author">— Принцип програми «Біг з нуля»</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICE -->
+  <section class="price" id="price">
+    <div class="price-inner">
+      <div class="reveal">
+        <div class="section-label">Вартість</div>
+        <h2>Простий і<br><em>чесний</em> вибір</h2>
+        <p class="lead">Одна ціна. Повний доступ. Починаєш коли хочеш.</p>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-badge">Повна програма</div>
+        <div class="price-amount"><sup>€</sup>12</div>
+        <div class="price-period">одноразова оплата — доступ назавжди</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>2-тижнева програма бігу для початківців</li>
+          <li>6 структурованих тренувань</li>
+          <li>Техніка, сила та мобільність</li>
+          <li>Розминка і заминка до кожного тренування</li>
+          <li>Пожиттєвий доступ до матеріалів</li>
+          <li>Зрозумілий зручний формат</li>
+        </ul>
+        <a href="#" class="btn-primary" style="width:100%; justify-content:center; border:none; cursor:pointer; font-size:1rem; padding:20px; border-radius:100px;">
+          Почати зараз — €12
+          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="price-guarantee">🔒 Безпечна оплата · Миттєвий доступ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="final-cta-inner">
+      <h2>Перший крок — найважливіший.</h2>
+      <p>Тисячі людей так і не почали, бо чекали «правильного» моменту. Цей момент — зараз.</p>
+      <a href="#price" class="btn-dark">
+        Почати зараз
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Біг з нуля</div>
+    <p>© 2025 Біг з нуля. Всі права захищені.</p>
+  </footer>
+
+  <script>
+    // Intersection Observer for reveal animations
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
