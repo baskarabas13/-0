@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Вітаміни для бігунів — Формула Бігу</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0a0a0a;--dark:#141414;--card:#1a1a1a;--border:#252525;
+  --gray:#666;--muted:#444;--light:#a0a0a0;--white:#ffffff;
+  --acc:#e8ff47;--acc2:rgba(232,255,71,0.1);--acc3:rgba(232,255,71,0.06);
+  --green:#4ade80;--blue:#60a5fa;--orange:#fb923c;--red:#f87171;--purple:#c084fc;
+  --serif:'DM Serif Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--black);color:var(--white);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+
+/* ─── COVER ─── */
+.cover{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:80px 48px;position:relative;overflow:hidden;
+}
+.cover-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 70% at 90% 20%,rgba(232,255,71,.08) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 50% at 10% 80%,rgba(96,165,250,.05) 0%,transparent 50%);
+}
+.cover-dots{
+  position:absolute;inset:0;z-index:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:32px 32px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);
+}
+.cover-inner{position:relative;z-index:1;max-width:900px}
+.cover-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--acc);margin-bottom:32px;
+  animation:fadeUp .7s .1s both;
+}
+.cover-eyebrow::before{content:'';width:24px;height:1px;background:var(--acc);display:block}
+.cover h1{
+  font-family:var(--serif);font-size:clamp(3rem,8vw,7rem);
+  line-height:.95;letter-spacing:-.03em;color:var(--white);
+  animation:fadeUp .8s .2s both;
+}
+.cover h1 em{font-style:italic;color:var(--acc)}
+.cover-sub{
+  margin-top:28px;max-width:500px;font-size:1.05rem;font-weight:300;
+  color:var(--light);line-height:1.75;
+  animation:fadeUp .8s .35s both;
+}
+.cover-pills{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:36px;
+  animation:fadeUp .8s .5s both;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 16px;border-radius:100px;border:1px solid var(--border);
+  font-size:.8rem;color:var(--light);background:var(--dark);
+}
+.pill .dot{width:7px;height:7px;border-radius:50%}
+.cover-scroll{
+  position:absolute;bottom:36px;left:48px;display:flex;align-items:center;gap:12px;
+  font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  animation:fadeIn .8s 1s both;
+}
+.scroll-bar{width:40px;height:1px;background:linear-gradient(to right,var(--muted),transparent)}
+
+/* ─── NAV ─── */
+.toc{
+  background:var(--dark);border-bottom:1px solid var(--border);
+  padding:0 48px;position:sticky;top:0;z-index:99;
+}
+.toc-inner{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.toc-inner::-webkit-scrollbar{display:none}
+.toc-link{
+  display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+  padding:14px 18px;font-size:.75rem;font-weight:500;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);text-decoration:none;
+  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+}
+.toc-link:hover{color:var(--acc);border-bottom-color:var(--acc)}
+.toc-num{font-family:var(--serif);font-size:.8rem;color:var(--border)}
+
+/* ─── SECTION SHARED ─── */
+.section{padding:80px 48px}
+.section-inner{max-width:1060px;margin:auto}
+.section-label{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gray);margin-bottom:16px;
+}
+.section-label::before{content:'';width:20px;height:1px;background:var(--gray);display:block}
+.section h2{
+  font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.5rem);
+  line-height:1.05;letter-spacing:-.02em;color:var(--white);margin-bottom:48px;
+}
+.section h2 em{font-style:italic;color:var(--acc)}
+
+/* ─── VITAMINS GRID ─── */
+.vitamins-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px}
+.vcard{
+  background:var(--card);padding:32px 28px;position:relative;overflow:hidden;
+  transition:background .25s,transform .25s;cursor:default;
+}
+.vcard:hover{background:#212121;transform:translateY(-2px)}
+.vcard::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:transparent;transition:background .25s;
+}
+.vcard:hover::after{background:var(--color)}
+.vcard-num{
+  font-family:var(--serif);font-size:3.5rem;line-height:1;
+  color:rgba(255,255,255,.05);display:block;margin-bottom:12px;
+}
+.vcard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.vcard-icon{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;
+  background:var(--acc2);
+}
+.vcard-badge{
+  font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px;
+}
+.vcard h3{font-family:var(--serif);font-size:1.25rem;color:var(--white);margin-bottom:12px}
+.vcard-rows{display:flex;flex-direction:column;gap:8px}
+.vcard-row{display:flex;gap:10px;align-items:flex-start}
+.vcard-row-label{
+  font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);flex-shrink:0;padding-top:2px;min-width:56px;
+}
+.vcard-row-val{font-size:.85rem;color:var(--light);line-height:1.5}
+.vcard-row-val strong{color:var(--white);font-weight:500}
+
+/* ─── PHARMACY / SPORT ─── */
+.products-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.product-card{
+  background:var(--card);padding:28px;
+  transition:background .25s;position:relative;overflow:hidden;
+}
+.product-card:hover{background:#212121}
+.product-card::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:2px;
+  background:var(--color,var(--border));
+}
+.product-card-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.product-icon{
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  background:var(--acc2);flex-shrink:0;
+}
+.product-card h3{font-size:1rem;font-weight:600;color:var(--white)}
+.product-card p{font-size:.85rem;color:var(--gray);line-height:1.6;margin-bottom:12px}
+.product-meta{display:flex;flex-wrap:wrap;gap:8px}
+.meta-tag{
+  font-size:.72rem;padding:4px 10px;border-radius:100px;
+  border:1px solid var(--border);color:var(--light);
+}
+.price-tag{
+  font-size:.72rem;padding:4px 10px;border-radius:100px;
+  background:var(--acc2);border:1px solid rgba(232,255,71,.2);color:var(--acc);
+}
+
+/* ─── MINIMUM TABLE ─── */
+.min-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.min-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:36px;
+}
+.min-card h3{
+  font-family:var(--serif);font-size:1.3rem;color:var(--white);margin-bottom:20px;
+  padding-bottom:16px;border-bottom:1px solid var(--border);
+}
+.min-list{display:flex;flex-direction:column;gap:10px}
+.min-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.min-item:last-child{border-bottom:none}
+.min-check{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;
+  background:var(--acc2);color:var(--acc);border:1px solid rgba(232,255,71,.2);
+}
+.min-item-name{font-size:.9rem;color:var(--white);font-weight:500}
+.min-item-dose{font-size:.8rem;color:var(--gray);margin-top:1px}
+.min-total{
+  margin-top:20px;padding:14px 16px;border-radius:8px;
+  background:var(--acc2);border:1px solid rgba(232,255,71,.15);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.min-total span{font-size:.8rem;color:var(--light)}
+.min-total strong{font-size:.95rem;color:var(--acc);font-weight:600}
+
+/* ─── SCHEDULE ─── */
+.schedule-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.sched-col{background:var(--card);padding:28px 24px}
+.sched-time{
+  font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:6px 12px;border-radius:100px;margin-bottom:20px;
+  display:inline-block;
+}
+.sched-col h3{font-family:var(--serif);font-size:1.15rem;color:var(--white);margin-bottom:16px}
+.sched-items{display:flex;flex-direction:column;gap:10px}
+.sched-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  border-radius:8px;background:rgba(255,255,255,.04);
+  font-size:.83rem;color:var(--light);
+  transition:background .2s;
+}
+.sched-item:hover{background:rgba(255,255,255,.07);color:var(--white)}
+.sched-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sched-item.opt{opacity:.55}
+.sched-item.opt .sched-dot{border:1px solid;background:transparent}
+
+/* ─── WARNING ─── */
+.warning{
+  background:linear-gradient(135deg,rgba(251,146,60,.08),rgba(248,113,113,.05));
+  border:1px solid rgba(251,146,60,.2);border-radius:12px;
+  padding:32px 36px;display:flex;gap:20px;align-items:flex-start;
+}
+.warning-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+.warning h3{font-size:1rem;font-weight:600;color:var(--orange);margin-bottom:8px}
+.warning ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.warning li{font-size:.875rem;color:var(--light);display:flex;gap:8px}
+.warning li::before{content:'—';color:var(--orange);flex-shrink:0}
+
+/* ─── DIVIDER ─── */
+.divider{height:1px;background:var(--border);margin:0 48px}
+
+/* ─── FOOTER ─── */
+.footer{
+  padding:40px 48px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--dark);
+}
+.footer-brand{font-family:var(--serif);font-size:1rem;color:var(--white)}
+.footer p{font-size:.8rem;color:var(--muted)}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+.rd1{transition-delay:.08s}.rd2{transition-delay:.16s}.rd3{transition-delay:.24s}
+.rd4{transition-delay:.32s}.rd5{transition-delay:.40s}.rd6{transition-delay:.48s}
+.rd7{transition-delay:.56s}.rd8{transition-delay:.64s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  .cover{padding:80px 20px 60px}
+  .cover-scroll{left:20px}
+  .toc{padding:0 20px}
+  .section{padding:60px 20px}
+  .vitamins-grid{grid-template-columns:1fr}
+  .products-grid{grid-template-columns:1fr}
+  .min-grid{grid-template-columns:1fr}
+  .schedule-grid{grid-template-columns:1fr 1fr}
+  .divider{margin:0 20px}
+  .footer{padding:32px 20px;flex-direction:column;gap:8px;text-align:center}
+}
+@media(max-width:480px){
+  .schedule-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-dots"></div>
+  <div class="cover-inner">
+    <div class="cover-eyebrow"><span></span>Бонусний гайд · Формула Бігу</div>
+    <h1>Вітаміни<br>для <em>бігунів</em></h1>
+    <p class="cover-sub">Базовий курс добавок, які реально підтримують відновлення, енергію та захист від травм під час тренувань.</p>
+    <div class="cover-pills">
+      <div class="pill"><span class="dot" style="background:#4ade80"></span>8 ключових вітамінів</div>
+      <div class="pill"><span class="dot" style="background:#60a5fa"></span>Аптека + спортпіт</div>
+      <div class="pill"><span class="dot" style="background:#e8ff47"></span>Схема прийому</div>
+      <div class="pill"><span class="dot" style="background:#fb923c"></span>Базовий мінімум</div>
+    </div>
+  </div>
+  <div class="cover-scroll">
+    <div class="scroll-bar"></div>
+    гортай вниз
+  </div>
+</section>
+
+<!-- NAV -->
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#vitamins" class="toc-link"><span class="toc-num">01</span> Вітаміни</a>
+    <a href="#pharmacy" class="toc-link"><span class="toc-num">02</span> Аптека</a>
+    <a href="#sport" class="toc-link"><span class="toc-num">03</span> Спортпіт</a>
+    <a href="#minimum" class="toc-link"><span class="toc-num">04</span> Мінімум</a>
+    <a href="#schedule" class="toc-link"><span class="toc-num">05</span> Схема прийому</a>
+  </div>
+</nav>
+
+<!-- BLOCK 1: VITAMINS -->
+<section class="section" id="vitamins">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Блок 01</div>
+      <h2>Основні вітаміни<br>для <em>нормального</em> функціонування</h2>
+    </div>
+    <div class="vitamins-grid">
+
+      <div class="vcard reveal rd1" style="--color:#4ade80">
+        <div class="vcard-top">
+          <div class="vcard-icon">☀️</div>
+          <span class="vcard-badge" style="background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.2)">Критично</span>
+        </div>
+        <span class="vcard-num">D</span>
+        <h3>Вітамін D</h3>
+        <div class="vcard-rows">
+          <div class="vcard-row"><span class="vcard-row-label">Для чого</span><span class="vcard-row-val">Міцність кісток, імунітет, м'язова сила, настрій</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Бігунам</span><span class="vcard-row-val">Зменшує ризик травм, підтримує енергію та відновлення</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Дефіцит</span><span class="vcard-row-val"><strong>80% людей</strong>, особливо восени-взимку</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Доза</span><span class="vcard-row-val"><strong>2000–4000 МО</strong> вранці з жирною їжею</span></div>
+        </div>
+      </div>
+
+      <div class="vcard reveal rd2" style="--color:#60a5fa">
+        <div class="vcard-top">
+          <div class="vcard-icon">⚡</div>
+          <span class="vcard-badge" style="background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.2)">Важливо</span>
+        </div>
+        <span class="vcard-num">Mg</span>
+        <h3>Магній</h3>
+        <div class="vcard-rows">
+          <div class="vcard-row"><span class="vcard-row-label">Для чого</span><span class="vcard-row-val">Робота м'язів, нервова система, енергія, сон</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Бігунам</span><span class="vcard-row-val">Запобігає судомам, покращує відновлення, знижує стрес</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Дефіцит</span><span class="vcard-row-val"><strong>70% людей</strong> (втрачається з потом)</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Доза</span><span class="vcard-row-val"><strong>300–400 мг</strong> ввечері перед сном</span></div>
+        </div>
+      </div>
+
+      <div class="vcard reveal rd3" style="--color:#fb923c">
+        <div class="vcard-top">
+          <div class="vcard-icon">🍊</div>
+          <span class="vcard-badge" style="background:rgba(251,146,60,.1);color:#fb923c;border:1px solid rgba(251,146,60,.2)">База</span>
+        </div>
+        <span class="vcard-num">C</span>
+        <h3>Вітамін C</h3>
+        <div class="vcard-rows">
+          <div class="vcard-row"><span class="vcard-row-label">Для чого</span><span class="vcard-row-val">Імунітет, відновлення тканин, антиоксидант</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Бігунам</span><span class="vcard-row-val">Захист від перетренованості, швидше відновлення</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Доза</span><span class="vcard-row-val"><strong>500–1000 мг</strong> вранці або після тренування</span></div>
+        </div>
+      </div>
+
+      <div class="vcard reveal rd4" style="--color:#c084fc">
+        <div class="vcard-top">
+          <div class="vcard-icon">🐟</div>
+          <span class="vcard-badge" style="background:rgba(192,132,252,.1);color:#c084fc;border:1px solid rgba(192,132,252,.2)">Серце</span>
+        </div>
+        <span class="vcard-num">Ω3</span>
+        <h3>Омега-3</h3>
+        <div class="vcard-rows">
+          <div class="vcard-row"><span class="vcard-row-label">Для чого</span><span class="vcard-row-val">Запалення, серце, мозок, суглоби</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Бігунам</span><span class="vcard-row-val">Менше болю в м'язах, краще відновлення, захист суглобів</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Доза</span><span class="vcard-row-val"><strong>1000–2000 мг</strong> EPA+DHA з їжею (будь-коли)</span></div>
+        </div>
+      </div>
+
+      <div class="vcard reveal rd5" style="--color:#f87171">
+        <div class="vcard-top">
+          <div class="vcard-icon">🩸</div>
+          <span class="vcard-badge" style="background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2)">Жінки</span>
+        </div>
+        <span class="vcard-num">Fe</span>
+        <h3>Залізо</h3>
+        <div class="vcard-rows">
+          <div class="vcard-row"><span class="vcard-row-label">Для чого</span><span class="vcard-row-val">Перенесення кисню, енергія, витривалість</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Бігунам</span><span class="vcard-row-val">Менше втоми, вища витривалість</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Дефіцит</span><span class="vcard-row-val"><strong>40% жінок-бігунів</strong></span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Доза</span><span class="vcard-row-val"><strong>18–30 мг</strong> (жінки) / <strong>8–10 мг</strong> (чоловіки) — натще з вітаміном C</span></div>
+        </div>
+      </div>
+
+      <div class="vcard reveal rd6" style="--color:#e8ff47">
+        <div class="vcard-top">
+          <div class="vcard-icon">⚙️</div>
+          <span class="vcard-badge" style="background:var(--acc2);color:var(--acc);border:1px solid rgba(232,255,71,.2)">Енергія</span>
+        </div>
+        <span class="vcard-num">B</span>
+        <h3>Вітаміни B</h3>
+        <div class="vcard-rows">
+          <div class="vcard-row"><span class="vcard-row-label">Для чого</span><span class="vcard-row-val">Енергія, нервова система, обмін речовин</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Бігунам</span><span class="vcard-row-val">Більше енергії, краще відновлення, стійкість до стресу</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Доза</span><span class="vcard-row-val"><strong>B-50 або B-100</strong> комплекс вранці з їжею</span></div>
+        </div>
+      </div>
+
+      <div class="vcard reveal rd7" style="--color:#4ade80">
+        <div class="vcard-top">
+          <div class="vcard-icon">🛡️</div>
+          <span class="vcard-badge" style="background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.2)">Захист</span>
+        </div>
+        <span class="vcard-num">E</span>
+        <h3>Вітамін E</h3>
+        <div class="vcard-rows">
+          <div class="vcard-row"><span class="vcard-row-label">Для чого</span><span class="vcard-row-val">Антиоксидант, захист клітин, відновлення м'язів</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Бігунам</span><span class="vcard-row-val">Зменшення м'язового болю, захист від стресу</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Доза</span><span class="vcard-row-val"><strong>200–400 МО</strong> з їжею</span></div>
+        </div>
+      </div>
+
+      <div class="vcard reveal rd8" style="--color:#60a5fa">
+        <div class="vcard-top">
+          <div class="vcard-icon">💊</div>
+          <span class="vcard-badge" style="background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.2)">Імунітет</span>
+        </div>
+        <span class="vcard-num">Zn</span>
+        <h3>Цинк</h3>
+        <div class="vcard-rows">
+          <div class="vcard-row"><span class="vcard-row-label">Для чого</span><span class="vcard-row-val">Імунітет, відновлення тканин, гормони</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Бігунам</span><span class="vcard-row-val">Швидше загоєння мікротравм, сильний імунітет</span></div>
+          <div class="vcard-row"><span class="vcard-row-label">Доза</span><span class="vcard-row-val"><strong>15–25 мг</strong> ввечері з їжею</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BLOCK 2a: PHARMACY -->
+<section class="section" id="pharmacy">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Блок 02 · Аптека</div>
+      <h2>Аптечні препарати —<br><em>бюджетно</em> і ефективно</h2>
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card reveal rd1" style="--color:#4ade80">
+        <div class="product-card-head">
+          <div class="product-icon">❤️</div>
+          <h3>Рибоксин</h3>
+        </div>
+        <p>Покращує енергетичний обмін у серцевому м'язі. Підтримка серця, витривалість, відновлення.</p>
+        <div class="product-meta">
+          <span class="meta-tag">200 мг × 3 рази/день</span>
+          <span class="meta-tag">Курс 1–2 міс.</span>
+          <span class="price-tag">~50–80 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd2" style="--color:#60a5fa">
+        <div class="product-card-head">
+          <div class="product-icon">🔋</div>
+          <h3>Оротат калію</h3>
+        </div>
+        <p>Анаболічна дія, покращує білковий обмін. Відновлення м'язів, енергія, підтримка серця.</p>
+        <div class="product-meta">
+          <span class="meta-tag">250–500 мг × 2 рази/день</span>
+          <span class="meta-tag">Курс 3–5 тижнів</span>
+          <span class="price-tag">~40–60 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd3" style="--color:#fb923c">
+        <div class="product-card-head">
+          <div class="product-icon">🍊</div>
+          <h3>Вітамін C (аскорбінка)</h3>
+        </div>
+        <p>Імунітет та антиоксидантний захист. Найдоступніша і найефективніша форма.</p>
+        <div class="product-meta">
+          <span class="meta-tag">500–1000 мг/день</span>
+          <span class="price-tag">~30–50 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd4" style="--color:#4ade80">
+        <div class="product-card-head">
+          <div class="product-icon">🛡️</div>
+          <h3>Вітамін E (токоферол)</h3>
+        </div>
+        <p>Антиоксидант, захист м'язів від окислювального стресу після тренувань.</p>
+        <div class="product-meta">
+          <span class="meta-tag">200–400 МО/день</span>
+          <span class="price-tag">~50–80 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd5" style="--color:#60a5fa">
+        <div class="product-card-head">
+          <div class="product-icon">⚡</div>
+          <h3>Магній B6</h3>
+        </div>
+        <p>Комплекс для м'язів, нервової системи та якісного сну. Пити ввечері.</p>
+        <div class="product-meta">
+          <span class="meta-tag">1–2 табл. ввечері</span>
+          <span class="price-tag">~80–120 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd6" style="--color:#c084fc">
+        <div class="product-card-head">
+          <div class="product-icon">🐟</div>
+          <h3>Омега-3 (рибячий жир)</h3>
+        </div>
+        <p>Протизапальна дія, захист суглобів. Є в будь-якій аптеці у вигляді капсул.</p>
+        <div class="product-meta">
+          <span class="meta-tag">1000–2000 мг/день</span>
+          <span class="price-tag">~150–300 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd7" style="--color:#e8ff47">
+        <div class="product-card-head">
+          <div class="product-icon">💊</div>
+          <h3>Мультивітамінний комплекс</h3>
+        </div>
+        <p>База вітамінів та мінералів. Супрадин, Vitrum або Centrum — на вибір.</p>
+        <div class="product-meta">
+          <span class="meta-tag">1 табл. вранці</span>
+          <span class="price-tag">~200–400 грн/місяць</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BLOCK 2b: SPORT NUTRITION -->
+<section class="section" id="sport">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Блок 03 · Спортпіт</div>
+      <h2>Спортивне харчування<br>для <em>прогресу</em></h2>
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card reveal rd1" style="--color:#e8ff47">
+        <div class="product-card-head">
+          <div class="product-icon">💪</div>
+          <h3>BCAA</h3>
+        </div>
+        <p>Лейцин, ізолейцин, валін — будматеріал м'язів. Запобігає руйнуванню та прискорює відновлення.</p>
+        <div class="product-meta">
+          <span class="meta-tag">5–10 г під час/після тренування</span>
+          <span class="price-tag">~400–800 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd2" style="--color:#4ade80">
+        <div class="product-card-head">
+          <div class="product-icon">🔥</div>
+          <h3>L-карнітин</h3>
+        </div>
+        <p>Транспортує жири в мітохондрії для отримання енергії. Спалювання жиру + більше витривалості.</p>
+        <div class="product-meta">
+          <span class="meta-tag">1000–2000 мг за 30 хв до трену</span>
+          <span class="price-tag">~300–600 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd3" style="--color:#60a5fa">
+        <div class="product-card-head">
+          <div class="product-icon">⚡</div>
+          <h3>Креатин моногідрат</h3>
+        </div>
+        <p>Енергія для коротких інтенсивних зусиль. Сила, вибухова потужність, спринти та інтервали.</p>
+        <div class="product-meta">
+          <span class="meta-tag">5 г/день (постійно)</span>
+          <span class="price-tag">~300–500 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd4" style="--color:#c084fc">
+        <div class="product-card-head">
+          <div class="product-icon">🧬</div>
+          <h3>Глютамін</h3>
+        </div>
+        <p>Амінокислота для відновлення та імунітету. Зменшує м'язовий біль після важких тренувань.</p>
+        <div class="product-meta">
+          <span class="meta-tag">5–10 г після тренування або на ніч</span>
+          <span class="price-tag">~400–700 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd5" style="--color:#fb923c">
+        <div class="product-card-head">
+          <div class="product-icon">💧</div>
+          <h3>Електроліти (Mg, K, Na)</h3>
+        </div>
+        <p>Мінерали, які втрачаються з потом. Запобігає судомам, підтримує баланс рідини.</p>
+        <div class="product-meta">
+          <span class="meta-tag">Під час/після довгих тренувань</span>
+          <span class="price-tag">~200–400 грн</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal rd6" style="--color:#4ade80">
+        <div class="product-card-head">
+          <div class="product-icon">🥛</div>
+          <h3>Протеїн</h3>
+        </div>
+        <p>Білок для відновлення м'язів. Якщо не набираєш 1.5–2 г на кг ваги з їжі.</p>
+        <div class="product-meta">
+          <span class="meta-tag">20–30 г після тренування</span>
+          <span class="price-tag">~600–1200 грн/кг</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MINIMUM -->
+<section class="section" id="minimum" style="background:var(--dark)">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Блок 04</div>
+      <h2>Базовий <em>мінімум</em> —<br>що точно взяти</h2>
+    </div>
+    <div class="min-grid">
+      <div class="min-card reveal rd1">
+        <h3>✅ Для всіх бігунів</h3>
+        <div class="min-list">
+          <div class="min-item">
+            <div class="min-check">✓</div>
+            <div><div class="min-item-name">Вітамін D</div><div class="min-item-dose">2000–4000 МО/день</div></div>
+          </div>
+          <div class="min-item">
+            <div class="min-check">✓</div>
+            <div><div class="min-item-name">Магній B6</div><div class="min-item-dose">300–400 мг/день</div></div>
+          </div>
+          <div class="min-item">
+            <div class="min-check">✓</div>
+            <div><div class="min-item-name">Омега-3</div><div class="min-item-dose">1000–2000 мг/день</div></div>
+          </div>
+          <div class="min-item">
+            <div class="min-check">✓</div>
+            <div><div class="min-item-name">Вітамін C</div><div class="min-item-dose">500–1000 мг/день</div></div>
+          </div>
+          <div class="min-item">
+            <div class="min-check">✓</div>
+            <div><div class="min-item-name">Мультивітамінний комплекс</div><div class="min-item-dose">1 табл. вранці</div></div>
+          </div>
+        </div>
+        <div class="min-total">
+          <span>Загальна вартість/місяць</span>
+          <strong>~500–800 грн</strong>
+        </div>
+      </div>
+
+      <div class="min-card reveal rd2">
+        <h3>🚀 Додатково для прогресу</h3>
+        <div class="min-list">
+          <div class="min-item">
+            <div class="min-check" style="color:#60a5fa;border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.08)">+</div>
+            <div><div class="min-item-name">BCAA</div><div class="min-item-dose">5–10 г на тренування</div></div>
+          </div>
+          <div class="min-item">
+            <div class="min-check" style="color:#60a5fa;border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.08)">+</div>
+            <div><div class="min-item-name">L-карнітин</div><div class="min-item-dose">1000–2000 мг до тренування</div></div>
+          </div>
+          <div class="min-item">
+            <div class="min-check" style="color:#60a5fa;border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.08)">+</div>
+            <div><div class="min-item-name">Рибоксин</div><div class="min-item-dose">Курс 1–2 місяці</div></div>
+          </div>
+          <div class="min-item">
+            <div class="min-check" style="color:#60a5fa;border-color:rgba(96,165,250,.3);background:rgba(96,165,250,.08)">+</div>
+            <div><div class="min-item-name">Оротат калію</div><div class="min-item-dose">Курс 3–5 тижнів</div></div>
+          </div>
+        </div>
+        <div class="min-total" style="background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.2)">
+          <span>Додатково/місяць</span>
+          <strong style="color:#60a5fa">+300–600 грн</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SCHEDULE -->
+<section class="section" id="schedule">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Блок 05</div>
+      <h2>Схема <em>прийому</em><br>протягом дня</h2>
+    </div>
+    <div class="schedule-grid">
+
+      <div class="sched-col reveal rd1">
+        <span class="sched-time" style="background:rgba(232,255,71,.1);color:var(--acc);border:1px solid rgba(232,255,71,.2)">🌅 Ранок</span>
+        <h3>Вранці з їжею</h3>
+        <div class="sched-items">
+          <div class="sched-item"><span class="sched-dot" style="background:#e8ff47"></span>Мультивітаміни</div>
+          <div class="sched-item"><span class="sched-dot" style="background:#4ade80"></span>Вітамін D</div>
+          <div class="sched-item"><span class="sched-dot" style="background:#c084fc"></span>Омега-3</div>
+          <div class="sched-item"><span class="sched-dot" style="background:#f87171"></span>Залізо (натще)</div>
+        </div>
+      </div>
+
+      <div class="sched-col reveal rd2">
+        <span class="sched-time" style="background:rgba(251,146,60,.1);color:#fb923c;border:1px solid rgba(251,146,60,.2)">⚡ До тренування</span>
+        <h3>За 30 хвилин до</h3>
+        <div class="sched-items">
+          <div class="sched-item"><span class="sched-dot" style="background:#4ade80"></span>L-карнітин</div>
+        </div>
+      </div>
+
+      <div class="sched-col reveal rd3">
+        <span class="sched-time" style="background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.2)">🏃 Тренування</span>
+        <h3>Під час та після</h3>
+        <div class="sched-items">
+          <div class="sched-item"><span class="sched-dot" style="background:#e8ff47"></span>BCAA (під час)</div>
+          <div class="sched-item"><span class="sched-dot" style="background:#fb923c"></span>Вітамін C (після)</div>
+          <div class="sched-item"><span class="sched-dot" style="background:#60a5fa"></span>Електроліти</div>
+        </div>
+      </div>
+
+      <div class="sched-col reveal rd4">
+        <span class="sched-time" style="background:rgba(192,132,252,.1);color:#c084fc;border:1px solid rgba(192,132,252,.2)">🌙 Вечір</span>
+        <h3>Перед сном</h3>
+        <div class="sched-items">
+          <div class="sched-item"><span class="sched-dot" style="background:#60a5fa"></span>Магній B6</div>
+          <div class="sched-item"><span class="sched-dot" style="background:#4ade80"></span>Цинк</div>
+          <div class="sched-item opt"><span class="sched-dot" style="border-color:#c084fc;color:#c084fc"></span>Глютамін (опціонально)</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WARNING -->
+    <div class="warning reveal" style="margin-top:40px">
+      <div class="warning-icon">⚠️</div>
+      <div>
+        <h3>Важливо пам'ятати</h3>
+        <ul>
+          <li>Перед початком прийому будь-яких добавок — проконсультуйтесь з лікарем</li>
+          <li>Не перевищуйте рекомендовані дозування</li>
+          <li>Приймайте курсами — 1–2 місяці з перервами</li>
+          <li>Вітаміни — це доповнення до правильного харчування, а не заміна їжі</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">Формула Бігу</div>
+  <p>Бонусний матеріал для учасників програми · Гайд носить інформаційний характер</p>
+</footer>
+
+<script>
+const els = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.1});
+els.forEach(e=>io.observe(e));
+</script>
+</body>
+</html>
